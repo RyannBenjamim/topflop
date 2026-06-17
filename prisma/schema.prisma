@@ -1,0 +1,191 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id String @id @default(cuid())
+
+  username String @unique
+  email    String @unique
+  password String
+
+  name String?
+  bio  String?
+
+  avatarUrl  String? @map("avatar_url")
+  avatarPath String? @map("avatar_path")
+
+  emailVerified Boolean @default(false) @map("email_verified")
+
+  role UserRole @default(USER)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  reviews  Review[]
+  comments Comment[]
+
+  reviewLikes  ReviewLike[]
+  commentLikes CommentLike[]
+
+  following Follow[] @relation("UserFollowing")
+  followers Follow[] @relation("UserFollowers")
+
+  passwordTokens PasswordResetToken[]
+  verifyTokens   EmailVerificationToken[]
+
+  @@map("users")
+}
+
+model Movie {
+  tmdbId Int @id @map("tmdb_id")
+
+  reviewCount Int @default(0) @map("review_count")
+
+  topSum Int @default(0) @map("top_sum")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  reviews Review[]
+
+  @@map("movies")
+}
+
+model Review {
+  id String @id @default(cuid())
+
+  title String
+
+  content String
+
+  topPercentage Int @map("top_percentage")
+
+  authorId String @map("author_id")
+
+  movieTmdbId Int @map("movie_tmdb_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  author User @relation(fields: [authorId], references: [id])
+
+  movie Movie @relation(fields: [movieTmdbId], references: [tmdbId])
+
+  comments Comment[]
+
+  likes ReviewLike[]
+
+  @@unique([authorId, movieTmdbId])
+  @@map("reviews")
+}
+
+model Comment {
+  id String @id @default(cuid())
+
+  content String
+
+  userId String @map("user_id")
+
+  reviewId String @map("review_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  review Review @relation(fields: [reviewId], references: [id])
+
+  likes CommentLike[]
+
+  @@map("comments")
+}
+
+model ReviewLike {
+  userId String @map("user_id")
+
+  reviewId String @map("review_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  review Review @relation(fields: [reviewId], references: [id])
+
+  @@id([userId, reviewId])
+  @@map("review_likes")
+}
+
+model CommentLike {
+  userId String @map("user_id")
+
+  commentId String @map("comment_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  comment Comment @relation(fields: [commentId], references: [id])
+
+  @@id([userId, commentId])
+  @@map("comment_likes")
+}
+
+model Follow {
+  followerId String @map("follower_id")
+
+  followingId String @map("following_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  follower User @relation("UserFollowers", fields: [followerId], references: [id])
+
+  following User @relation("UserFollowing", fields: [followingId], references: [id])
+
+  @@id([followerId, followingId])
+  @@map("follows")
+}
+
+model PasswordResetToken {
+  id String @id @default(cuid())
+
+  token String @unique
+
+  expiresAt DateTime @map("expires_at")
+
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("password_reset_tokens")
+}
+
+model EmailVerificationToken {
+  id String @id @default(cuid())
+
+  token String @unique
+
+  expiresAt DateTime @map("expires_at")
+
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("email_verification_tokens")
+}

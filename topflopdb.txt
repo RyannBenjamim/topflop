@@ -1,0 +1,76 @@
+users
+├── id
+├── username
+├── email
+├── password
+├── name
+├── bio
+├── avatar_url
+├── avatar_path
+├── email_verified
+├── role
+├── created_at
+└── updated_at
+
+movies
+├── tmdb_id
+├── review_count
+├── top_sum
+├── created_at
+└── updated_at
+
+reviews
+├── id
+├── title
+├── content
+├── author_id
+├── movie_tmdb_id
+├── top_percentage
+├── created_at
+└── updated_at
+
+comments
+├── id
+├── content
+├── user_id
+├── review_id
+├── created_at
+└── updated_at
+
+review_likes
+├── user_id
+├── review_id
+└── created_at
+
+PK:
+(user_id, review_id)
+
+comment_likes
+├── user_id
+├── comment_id
+└── created_at
+
+PK:
+(user_id, comment_id)
+
+follows
+├── follower_id
+├── following_id
+└── created_at
+
+PK:
+(follower_id, following_id)
+
+password_reset_tokens
+├── id
+├── token
+├── expires_at
+├── user_id
+└── created_at
+
+email_verification_tokens
+├── id
+├── token
+├── expires_at
+├── user_id
+└── created_at

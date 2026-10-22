@@ -157,7 +157,7 @@
   color: var(--color-text-strong);
 }
 
-.mobile_nav, .mobile_actions {
+.mobile_nav, .menu_button, .drawer, .drawer_overlay {
   display: none;
 }
 
@@ -180,24 +180,199 @@
     display: none;
   }
 
-  .mobile_actions {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-  }
-
-  .mobile_logout {
+  .menu_button {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: none;
     width: 40px;
     height: 40px;
     margin-right: -10px;
+    border: none;
     border-radius: 8px;
+    background-color: transparent;
+    cursor: pointer;
   }
 
-  .mobile_logout:active {
+  .menu_button i {
+    font-size: 20px;
+    color: var(--color-text-strong);
+  }
+
+  .menu_button:active {
     background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .drawer_overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s;
+  }
+
+  .drawer_overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .drawer {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 21;
+    width: min(300px, 85vw);
+    padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+    background-color: var(--color-surface);
+    border-left: 1px solid var(--color-border);
+    overflow-y: auto;
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform .3s ease, visibility 0s .3s;
+  }
+
+  .drawer.open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform .3s ease;
+  }
+
+  .drawer_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .drawer_header .menu_button {
+    margin-right: -8px;
+  }
+
+  .drawer_profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .drawer_profile div {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .drawer_profile strong, .drawer_profile span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .drawer_profile strong {
+    font-size: 15px;
+    color: var(--color-text-strong);
+  }
+
+  .drawer_profile span {
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  .drawer_nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .drawer_link, .drawer_logout {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-soft);
+    transition: background-color .2s, color .2s;
+  }
+
+  .drawer_link i, .drawer_logout i {
+    width: 20px;
+    font-size: 17px;
+    text-align: center;
+  }
+
+  .drawer_link:active, .drawer_logout:active {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .drawer_link.active {
+    color: var(--color-text-strong);
+    background-color: rgba(232, 176, 74, 0.1);
+  }
+
+  .drawer_link.active i {
+    color: var(--color-accent-light);
+  }
+
+  .drawer_badge {
+    margin-left: auto;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .drawer_logout {
+    margin-top: auto;
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    padding-top: 16px;
+    background-color: transparent;
+    color: var(--color-flop-light);
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .nav_icon {
+    position: relative;
+    display: flex;
+  }
+
+  .badge {
+    position: absolute;
+    top: -7px;
+    right: -10px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 2px solid var(--color-surface);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.62rem;
+    font-weight: 700;
+    line-height: 1;
   }
 
   .mobile_nav {

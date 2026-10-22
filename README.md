@@ -50,7 +50,7 @@ flowchart LR
     F -->|dados dos filmes| T[(TMDB API)]
     B --> P[(PostgreSQL)]
     B --> R[(Redis)]
-    R -->|filas BullMQ| W[workers<br/>e-mails, métricas,<br/>notificações, limpeza]
+    R -->|filas BullMQ| W["workers<br/>e-mails<br/>métricas<br/>notificações<br/>limpeza"]
     W --> E[Resend]
 ```
 

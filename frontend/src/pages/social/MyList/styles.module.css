@@ -1,0 +1,31 @@
+.mylist {
+  min-height: 100vh;
+  background-color: var(--color-section);
+  padding-top: 50px;
+  padding-bottom: 150px;
+}
+
+.mylist h3 {
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.subtitle {
+  margin: 6px 0 20px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.mylist .container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (max-width: 700px) {
+  .mylist {
+    padding-top: 24px;
+    padding-bottom: 110px;
+  }
+}

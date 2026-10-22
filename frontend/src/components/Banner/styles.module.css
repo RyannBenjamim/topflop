@@ -1,0 +1,124 @@
+.banner,
+.backdrop {
+  --banner-fallback: radial-gradient(circle at 20% 30%, rgba(232, 176, 74, 0.14) 0%, #121212 60%);
+  --banner-img: var(--banner-fallback);
+  --banner-img-mobile: var(--banner-fallback);
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: 100%;
+  height: clamp(420px, 38vw, 620px);
+  padding: 0 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--color-background);
+  background-image:
+    linear-gradient(rgba(18, 18, 18, 0.35), rgba(18, 18, 18, 0.6), #121212),
+    var(--banner-img);
+  background-repeat: no-repeat;
+  background-position: center 25%;
+  background-size: cover;
+}
+
+.banner h1 {
+  margin-bottom: 18px;
+  line-height: 1;
+}
+
+.banner p {
+  max-width: 520px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.5rem;
+  font-size: 20px;
+  color: var(--color-text);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 700px) {
+  .banner,
+  .backdrop {
+    height: auto;
+    justify-content: flex-end;
+    padding: calc(56.25vw - 40px) 20px 36px;
+    background-image:
+      linear-gradient(rgba(18, 18, 18, 0.1), rgba(18, 18, 18, 0.35) 55%, #121212),
+      var(--banner-img-mobile);
+    background-position: top center;
+    background-size: 100% calc(56.25vw + 2px), 100% 56.25vw;
+  }
+
+  .banner h1 {
+    margin-bottom: 12px;
+  }
+
+  .banner p {
+    font-size: 16px;
+    line-height: 1.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .banner,
+  .backdrop {
+    padding: calc(56.25vw - 32px) 16px 28px;
+  }
+
+  .banner h1 {
+    margin-bottom: 8px;
+  }
+
+  .banner p {
+    font-size: 14px;
+    line-height: 1.3rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .banner,
+  .backdrop {
+    height: auto;
+    justify-content: center;
+    padding: 36px 20px;
+    background-image:
+      linear-gradient(rgba(18, 18, 18, 0.35), rgba(18, 18, 18, 0.6), #121212),
+      var(--banner-img-mobile);
+    background-position: center 25%;
+    background-size: cover;
+  }
+
+  .banner h1 {
+    margin-bottom: 8px;
+  }
+
+  .banner p {
+    font-size: 15px;
+    line-height: 1.35rem;
+  }
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  height: auto;
+  padding: 0;
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+
+.backdrop.loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop {
+    transition: none;
+  }
+}

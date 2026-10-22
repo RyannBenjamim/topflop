@@ -1,0 +1,85 @@
+.settings {
+  min-height: 100vh;
+  padding-top: 50px;
+  padding-bottom: 150px;
+  background-color: var(--color-section);
+}
+
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.top h3 {
+  letter-spacing: 0.5px;
+}
+
+.top a {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.top a i {
+  font-size: 0.75rem;
+  color: inherit;
+}
+
+.top a:hover {
+  color: var(--color-text-strong);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 25px;
+  margin-bottom: 20px;
+  background-color: var(--color-surface);
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+}
+
+.danger {
+  gap: 15px;
+  border: 1px solid #4a1f1f;
+}
+
+.danger h4 {
+  color: var(--color-flop-light);
+  margin-bottom: 6px;
+}
+
+.danger p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.danger > button {
+  align-self: flex-start;
+}
+
+@media (max-width: 700px) {
+  .card {
+    padding: 18px;
+  }
+
+  .top {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 360px) {
+  .card {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 700px) {
+  .settings {
+    padding-top: 24px;
+    padding-bottom: 110px;
+  }
+}

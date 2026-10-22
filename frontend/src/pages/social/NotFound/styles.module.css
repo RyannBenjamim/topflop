@@ -1,0 +1,13 @@
+.not_found {
+  min-height: 100vh;
+  padding-top: 80px;
+  background-color: var(--color-section);
+  text-align: center;
+}
+
+.not_found h2 {
+  font-family: 'Caesar Dressing', sans-serif;
+  font-size: 90px;
+  color: var(--color-primary-hover);
+  margin-bottom: 20px;
+}

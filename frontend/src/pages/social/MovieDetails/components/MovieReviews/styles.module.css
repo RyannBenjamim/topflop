@@ -1,0 +1,54 @@
+.section {
+  margin-bottom: 20px;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-strong);
+}
+
+.header h3 span {
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+  background-color: var(--color-border);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.mine {
+  font-size: 0.9rem;
+  color: var(--color-accent-light);
+  font-weight: 500;
+}
+
+.mine i {
+  font-size: 0.75rem;
+  color: inherit;
+}
+
+.form {
+  margin-bottom: 20px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 360px) {
+  .header > button {
+    width: 100%;
+  }
+}

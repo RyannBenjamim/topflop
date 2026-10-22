@@ -1,0 +1,88 @@
+.years {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.year h3 {
+  font-family: 'Caesar Dressing', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  color: var(--color-text-strong);
+  margin-bottom: 12px;
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 180px));
+  gap: 20px;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.slot img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background-color: var(--color-section);
+  border-radius: 8px;
+  border: 2px solid var(--color-primary-border);
+  transition: transform .5s;
+}
+
+.slot:hover img {
+  transform: scale(1.03);
+}
+
+.slot p {
+  font-size: 0.9rem;
+  color: var(--color-text-soft);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.top {
+  background-color: var(--color-top);
+}
+
+.flop {
+  background-color: var(--color-flop);
+}
+
+.empty {
+  aspect-ratio: 2 / 3;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+}
+
+.empty p {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 700px) {
+  .slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}

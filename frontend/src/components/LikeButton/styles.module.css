@@ -1,0 +1,39 @@
+.like {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color .3s;
+}
+
+.like:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.like:disabled {
+  cursor: wait;
+}
+
+.like i {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  transition: transform .2s;
+}
+
+.like span {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.liked i {
+  color: var(--color-accent-light);
+  transform: scale(1.1);
+}
+
+.liked span {
+  color: var(--color-text);
+}

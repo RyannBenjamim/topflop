@@ -1,0 +1,69 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-soft);
+  letter-spacing: 0.3px;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  outline: none;
+  border: 1px solid var(--color-border);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  transition: border-color .25s, box-shadow .25s;
+}
+
+.field textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 0 0 3px rgba(232, 176, 74, 0.25);
+}
+
+.field .invalid {
+  border-color: var(--color-flop);
+}
+
+.error {
+  font-size: 0.85rem;
+  color: var(--color-flop-light);
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 420px) {
+  .field {
+    gap: 4px;
+  }
+
+  .field label {
+    font-size: 0.85rem;
+  }
+
+  .field input {
+    padding: 8px 11px;
+  }
+
+  .error,
+  .hint {
+    font-size: 0.8rem;
+  }
+}

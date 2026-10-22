@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form > button {
+  width: 100%;
+  padding: 11px 14px;
+}
+
+.forgot {
+  align-self: flex-end;
+  margin-top: -6px;
+  font-size: 0.85rem;
+  color: var(--color-accent-light);
+}
+
+.resend {
+  margin-top: 6px;
+  padding: 0;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.resend:disabled {
+  cursor: wait;
+  opacity: 70%;
+}
+
+@media (max-width: 420px) {
+  .form {
+    gap: 12px;
+  }
+
+  .form > button {
+    padding: 9px 14px;
+  }
+}

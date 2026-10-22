@@ -1,0 +1,123 @@
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color .25s, background-color .25s;
+}
+
+.item:hover {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-surface-hover);
+}
+
+.unread {
+  border-color: rgba(232, 176, 74, 0.35);
+  background: linear-gradient(90deg, rgba(232, 176, 74, 0.07), transparent 55%), var(--color-surface);
+}
+
+.avatar {
+  position: relative;
+  flex: none;
+  display: flex;
+}
+
+.icon {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--color-surface);
+  background-color: var(--color-border-strong);
+}
+
+.icon i {
+  display: block;
+  font-size: 8px;
+  line-height: 1;
+  color: var(--color-text-strong);
+}
+
+.review_like,
+.comment_like {
+  background-color: var(--color-flop);
+}
+
+.follow,
+.new_review {
+  background-color: var(--color-primary);
+}
+
+.follow i,
+.new_review i {
+  color: var(--color-on-primary);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.text {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--color-text-soft);
+}
+
+.text strong {
+  color: var(--color-text-strong);
+  font-weight: 600;
+}
+
+.excerpt {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--color-text-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.excerpt::before {
+  content: '“';
+}
+
+.excerpt::after {
+  content: '”';
+}
+
+.content time {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.dot {
+  flex: none;
+  align-self: center;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+}
+
+@media (max-width: 360px) {
+  .item {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .text {
+    font-size: 0.9rem;
+  }
+}

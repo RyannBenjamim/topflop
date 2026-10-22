@@ -1,0 +1,14 @@
+# Redis usado pelas filas do BullMQ (e-mails, métricas dos filmes e limpeza de tokens).
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: topflop-redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+volumes:
+  redis-data:

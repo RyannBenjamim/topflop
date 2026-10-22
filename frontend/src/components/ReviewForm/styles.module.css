@@ -1,0 +1,44 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.score label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-soft);
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.range input {
+  flex: 1;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.error {
+  font-size: 0.85rem;
+  color: var(--color-flop-light);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

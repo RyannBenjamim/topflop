@@ -1,0 +1,260 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum NotificationType {
+  FOLLOW
+  REVIEW_LIKE
+  REVIEW_COMMENT
+  COMMENT_LIKE
+  NEW_REVIEW
+}
+
+model User {
+  id String @id @default(uuid())
+
+  username String @unique
+  email    String @unique
+  password String
+
+  name String?
+  bio  String?
+
+  avatarUrl  String? @map("avatar_url")
+  avatarPath String? @map("avatar_path")
+
+  emailVerified Boolean @default(false) @map("email_verified")
+
+  role UserRole @default(USER)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  reviews  Review[]
+  comments Comment[]
+
+  reviewLikes  ReviewLike[]
+  commentLikes CommentLike[]
+
+  following Follow[] @relation("UserFollowing")
+  followers Follow[] @relation("UserFollowers")
+
+  passwordTokens PasswordResetToken[]
+  verifyTokens   EmailVerificationToken[]
+
+  watchlist        Watchlist[]
+  annualHighlights AnnualHighlight[]
+
+  notifications     Notification[] @relation("NotificationRecipient")
+  sentNotifications Notification[] @relation("NotificationActor")
+
+  @@map("users")
+}
+
+model Movie {
+  tmdbId Int @id @map("tmdb_id")
+
+  reviewCount Int @default(1) @map("review_count")
+
+  topSum Int @default(0) @map("top_sum")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  reviews Review[]
+
+  watchlistedBy    Watchlist[]
+  topInHighlights  AnnualHighlight[] @relation("TopMovie")
+  flopInHighlights AnnualHighlight[] @relation("FlopMovie")
+
+  @@map("movies")
+}
+
+model Review {
+  id String @id @default(uuid())
+
+  title String
+
+  content String
+
+  topPercentage Int @map("top_percentage")
+
+  authorId String @map("author_id")
+
+  movieTmdbId Int @map("movie_tmdb_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  author User  @relation(fields: [authorId], references: [id])
+  movie  Movie @relation(fields: [movieTmdbId], references: [tmdbId])
+
+  comments Comment[]
+  likes    ReviewLike[]
+
+  notifications Notification[]
+
+  @@unique([authorId, movieTmdbId])
+  @@map("reviews")
+}
+
+model Comment {
+  id String @id @default(uuid())
+
+  content String
+
+  userId String @map("user_id")
+
+  reviewId String @map("review_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  review Review @relation(fields: [reviewId], references: [id])
+
+  likes CommentLike[]
+
+  notifications Notification[]
+
+  @@map("comments")
+}
+
+model ReviewLike {
+  userId String @map("user_id")
+
+  reviewId String @map("review_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id])
+  review Review @relation(fields: [reviewId], references: [id])
+
+  @@id([userId, reviewId])
+  @@map("review_likes")
+}
+
+model CommentLike {
+  userId String @map("user_id")
+
+  commentId String @map("comment_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User    @relation(fields: [userId], references: [id])
+  comment Comment @relation(fields: [commentId], references: [id])
+
+  @@id([userId, commentId])
+  @@map("comment_likes")
+}
+
+model Follow {
+  followerId String @map("follower_id")
+
+  followingId String @map("following_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  follower  User @relation("UserFollowers", fields: [followerId], references: [id])
+  following User @relation("UserFollowing", fields: [followingId], references: [id])
+
+  @@id([followerId, followingId])
+  @@map("follows")
+}
+
+model PasswordResetToken {
+  id String @id @default(uuid())
+
+  token String @unique
+
+  expiresAt DateTime @map("expires_at")
+
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("password_reset_tokens")
+}
+
+model EmailVerificationToken {
+  id String @id @default(uuid())
+
+  token String @unique
+
+  expiresAt DateTime @map("expires_at")
+
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("email_verification_tokens")
+}
+
+model Watchlist {
+  userId      String   @map("user_id")
+  movieTmdbId Int      @map("movie_tmdb_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  user  User  @relation(fields: [userId], references: [id])
+  movie Movie @relation(fields: [movieTmdbId], references: [tmdbId])
+
+  @@id([userId, movieTmdbId])
+  @@map("watchlist")
+}
+
+model AnnualHighlight {
+  id     String @id @default(uuid())
+  userId String @map("user_id")
+  year   Int
+
+  topMovieId  Int? @map("top_movie_id")
+  flopMovieId Int? @map("flop_movie_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user      User   @relation(fields: [userId], references: [id])
+  topMovie  Movie? @relation("TopMovie", fields: [topMovieId], references: [tmdbId])
+  flopMovie Movie? @relation("FlopMovie", fields: [flopMovieId], references: [tmdbId])
+
+  @@unique([userId, year])
+  @@map("annual_highlights")
+}
+
+model Notification {
+  id String @id @default(uuid())
+
+  type NotificationType
+
+  recipientId String @map("recipient_id")
+  actorId     String @map("actor_id")
+
+  reviewId  String? @map("review_id")
+  commentId String? @map("comment_id")
+
+  readAt DateTime? @map("read_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  recipient User     @relation("NotificationRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  actor     User     @relation("NotificationActor", fields: [actorId], references: [id], onDelete: Cascade)
+  review    Review?  @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  comment   Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@index([recipientId, createdAt])
+  @@index([recipientId, readAt])
+  @@map("notifications")
+}

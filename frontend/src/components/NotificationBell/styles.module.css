@@ -1,0 +1,47 @@
+.bell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  transition: background-color .25s;
+}
+
+.bell i {
+  font-size: 17px;
+  color: var(--color-text-muted);
+  transition: color .25s;
+}
+
+.bell:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.bell:hover i {
+  color: var(--color-text-strong);
+}
+
+.active i {
+  color: var(--color-accent-light);
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 2px solid var(--color-background);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+}

@@ -1,0 +1,32 @@
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.hint a {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.hint a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 360px) {
+  .buttons > * {
+    flex: 1 1 100%;
+  }
+}

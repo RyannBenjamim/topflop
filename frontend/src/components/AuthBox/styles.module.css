@@ -1,0 +1,144 @@
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(232, 176, 74, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(232, 176, 74, 0.07) 0%, transparent 40%),
+    var(--color-background);
+}
+
+.box {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 35px 30px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+.logo {
+  align-self: center;
+  display: flex;
+}
+
+.box h1 {
+  font-size: 1.4rem;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.subtitle {
+  margin-top: -8px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.subtitle strong {
+  color: var(--color-text);
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.footer a {
+  color: var(--color-accent-light);
+  font-weight: 500;
+}
+
+@media (max-width: 700px) {
+  .box {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 420px) {
+  .page {
+    padding: 20px 12px;
+  }
+
+  .box {
+    padding: 22px 18px;
+    gap: 14px;
+  }
+
+  .logo > span {
+    font-size: 1.8rem;
+  }
+
+  .box h1 {
+    font-size: 1.25rem;
+  }
+
+  .subtitle {
+    margin-top: -6px;
+    font-size: 0.875rem;
+  }
+
+  .footer {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .page {
+    padding: 12px 10px;
+  }
+
+  .box {
+    padding: 18px 14px;
+    gap: 12px;
+  }
+
+  .logo > span {
+    font-size: 1.6rem;
+  }
+
+  .box h1 {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 700px) and (max-height: 640px) {
+  .page {
+    align-items: flex-start;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .box {
+    gap: 12px;
+  }
+
+  .logo > span {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .page {
+    align-items: flex-start;
+    padding: 20px 16px;
+  }
+
+  .box {
+    padding: 20px 24px;
+    gap: 12px;
+  }
+
+  .logo > span {
+    font-size: 1.6rem;
+  }
+}

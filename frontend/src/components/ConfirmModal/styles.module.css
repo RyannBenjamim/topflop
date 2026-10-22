@@ -1,0 +1,98 @@
+.dialog {
+  margin: auto;
+  padding: 0;
+  width: calc(100% - 32px);
+  max-width: 380px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.8);
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.dialog[open] {
+  animation: enter .2s ease;
+}
+
+.dialog[open]::backdrop {
+  animation: fade .2s ease;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 24px 22px;
+  text-align: center;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.icon i {
+  font-size: 1.1rem;
+  color: inherit;
+}
+
+.icon.primary {
+  background-color: rgba(232, 176, 74, 0.14);
+  color: var(--color-primary);
+}
+
+.icon.danger {
+  background-color: rgba(179, 71, 71, 0.18);
+  color: var(--color-flop-light);
+}
+
+.box h3 {
+  font-size: 1.15rem;
+}
+
+.box p {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop {
+    animation: none;
+  }
+}

@@ -1,0 +1,56 @@
+.comments h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-strong);
+  margin-bottom: 15px;
+}
+
+.comments h3 span {
+  font-size: 0.8rem;
+  color: var(--color-text-soft);
+  background-color: var(--color-border);
+  border-radius: 10px;
+  padding: 2px 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.form textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  outline: none;
+  border: 1px solid var(--color-border);
+  padding: 10px 12px;
+  border-radius: 6px;
+  background-color: var(--color-surface);
+  line-height: 1.5;
+  transition: border-color .3s;
+}
+
+.form textarea:focus {
+  border-color: var(--color-primary-border);
+}
+
+.form_footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form_footer p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

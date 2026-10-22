@@ -10,7 +10,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173',
-      'http://192.168.1.70:5173',
+      'https://topflop-frontend.onrender.com',
     ],
     credentials: true,
     exposedHeaders: [

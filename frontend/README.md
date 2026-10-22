@@ -1,4 +1,4 @@
-# TopFlop — Frontend
+# TopFlop - Frontend
 
 Interface web do **TopFlop**, a rede social de reviews de filmes. É uma SPA em **React 19 + TypeScript + Vite**, responsiva, com navegação no topo no desktop e barra inferior no celular.
 

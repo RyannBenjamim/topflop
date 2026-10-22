@@ -1,4 +1,4 @@
-# TopFlop — Backend
+# TopFlop - Backend
 
 API REST do **TopFlop**, uma rede social de reviews de filmes. Feita com **NestJS**, **PostgreSQL** e **Prisma**, com tarefas em segundo plano no **BullMQ** (sobre Redis) e e-mails enviados pelo **Resend** com templates em **React Email**.
 

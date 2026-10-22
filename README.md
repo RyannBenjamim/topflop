@@ -99,4 +99,4 @@ Em desenvolvimento, o frontend chama `/api/...` e o proxy do Vite repassa para a
 
 ## Autor
 
-Feito por **Ryan Costa**.
+Feito por **Ryan Benjamim**.

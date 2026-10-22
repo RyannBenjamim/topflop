@@ -8,10 +8,12 @@ import { NotificationsProvider } from "../../../context/NotificationsContext";
 import { scrollToTop } from "../../../utils/scrollToTop";
 
 const SocialLayout = () => {
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
+  const keepScroll = (state as { keepScroll?: boolean } | null)?.keepScroll;
 
   useEffect(() => {
-    scrollToTop();
+    if (!keepScroll) scrollToTop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (

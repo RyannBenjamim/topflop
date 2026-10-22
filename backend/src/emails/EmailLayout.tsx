@@ -39,34 +39,36 @@ interface EmailLayoutProps {
 export const EmailLayout = ({ preview, heading, children, action, note, footer }: EmailLayoutProps) => (
   <Html lang="pt-BR">
     <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="color-scheme" content="dark" />
       <meta name="supported-color-schemes" content="dark" />
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter:wght@400;600;700&display=swap"
       />
+      <style>{responsiveStyles}</style>
     </Head>
     <Preview>{preview}</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Section style={logoSection}>
+    <Body style={main} className="tf-body">
+      <Container style={container} className="tf-container">
+        <Section style={logoSection} className="tf-logo-section">
           <Link href={APP_URL} style={logo}>
-            <span style={{ ...logoText, color: colors.primary }}>Top</span>
-            <span style={{ ...logoText, color: colors.text }}>Flop</span>
+            <span style={{ ...logoText, color: colors.primary }} className="tf-logo">Top</span>
+            <span style={{ ...logoText, color: colors.text }} className="tf-logo">Flop</span>
           </Link>
         </Section>
 
         <Section style={card}>
           <Section style={accentBar} />
-          <Section style={cardContent}>
-            <Heading as="h1" style={headingStyle}>{heading}</Heading>
+          <Section style={cardContent} className="tf-card-content">
+            <Heading as="h1" style={headingStyle} className="tf-heading">{heading}</Heading>
 
             {children}
 
             {action && (
               <>
                 <Section style={buttonSection}>
-                  <Button href={action.href} style={button}>{action.label}</Button>
+                  <Button href={action.href} style={button} className="tf-button">{action.label}</Button>
                 </Section>
                 <Text style={fallback}>
                   Se o botão não funcionar, copie e cole este link no navegador:
@@ -91,8 +93,23 @@ export const EmailLayout = ({ preview, heading, children, action, note, footer }
 );
 
 export const Paragraph = ({ children }: { children: React.ReactNode }) => (
-  <Text style={paragraph}>{children}</Text>
+  <Text style={paragraph} className="tf-paragraph">{children}</Text>
 );
+
+// Clientes que suportam <style> (Gmail, Apple Mail, Outlook app) aplicam isso;
+// o !important é necessário para sobrescrever os estilos inline.
+const responsiveStyles = `
+  @media only screen and (max-width: 600px) {
+    .tf-body { padding: 24px 12px !important; }
+    .tf-container { width: 100% !important; max-width: 100% !important; }
+    .tf-logo-section { padding: 0 0 20px !important; }
+    .tf-logo { font-size: 28px !important; }
+    .tf-card-content { padding: 24px 20px !important; }
+    .tf-heading { font-size: 20px !important; }
+    .tf-paragraph { font-size: 15px !important; line-height: 1.6 !important; }
+    .tf-button { display: block !important; text-align: center !important; padding: 14px 16px !important; }
+  }
+`;
 
 const fontFamily = 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
@@ -104,6 +121,7 @@ const main = {
 };
 
 const container = {
+  width: '100%',
   maxWidth: '520px',
   margin: '0 auto',
 };
@@ -180,11 +198,14 @@ const fallback = {
   margin: '24px 0 0',
   paddingTop: '20px',
   borderTop: `1px solid ${colors.border}`,
+  wordBreak: 'break-all' as const,
+  overflowWrap: 'anywhere' as const,
 };
 
 const fallbackLink = {
   color: colors.primary,
   wordBreak: 'break-all' as const,
+  overflowWrap: 'anywhere' as const,
 };
 
 const noteStyle = {

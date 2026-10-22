@@ -140,6 +140,7 @@ const Profile = () => {
               role="tab"
               aria-selected={activeTab === tab.path}
               to={tab.path ? `${basePath}/${tab.path}` : basePath}
+              state={{ keepScroll: true }}
               className={activeTab === tab.path ? styles.active : undefined}
             >
               {tab.name}

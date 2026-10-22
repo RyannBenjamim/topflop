@@ -6,7 +6,7 @@ Em produção: **[topflop.vercel.app](https://topflop.vercel.app)**
 
 > Visão geral do projeto (frontend + backend): [README da raiz](../README.md)
 
-![Telas do TopFlop no desktop](../docs/topflop-desktop.png)
+![Telas do TopFlop no desktop](../assets/topflop-desktop.png)
 
 ---
 

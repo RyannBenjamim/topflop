@@ -10,11 +10,11 @@
 </p>
 
 <p align="center">
-  <img src="./docs/topflop-desktop.png" alt="Telas do TopFlop no desktop: feed de reviews, descoberta de filmes, página do filme e perfil" width="100%">
+  <img src="./assets/topflop-desktop.png" alt="Telas do TopFlop no desktop: feed de reviews, descoberta de filmes, página do filme e perfil" width="100%">
 </p>
 
 <p align="center">
-  <img src="./docs/topflop-mobile.png" alt="Telas do TopFlop no celular: feed de reviews, descoberta de filmes e perfil" width="100%">
+  <img src="./assets/topflop-mobile.png" alt="Telas do TopFlop no celular: feed de reviews, descoberta de filmes e perfil" width="100%">
 </p>
 
 ---

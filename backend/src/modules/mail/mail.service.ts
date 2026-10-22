@@ -11,19 +11,23 @@ import { PasswordResetTemplate } from '../../emails/PasswordReset';
 export class MailService {
   private resend: Resend;
   private readonly logger = new Logger(MailService.name);
-  private readonly fromEmail = 'TopFlop <noreply@comenio.online>'; 
+  private readonly fromEmail = 'TopFlop <noreply@topflop.comenio.online>'; 
 
   constructor() {
     this.resend = new Resend(process.env.RESEND_API_KEY);
   }
 
-  private async send({ to, subject, html }: { to: string; subject: string; html: string }) {
+  private async send({ to, subject, email }: { to: string; subject: string; email: React.ReactElement }) {
+    // Enviar só HTML, sem versão em texto puro, é um sinal de spam para Gmail/Outlook.
+    const [html, text] = await Promise.all([render(email), render(email, { plainText: true })]);
+
     try {
       const { data, error } = await this.resend.emails.send({
         from: this.fromEmail,
         to: [to],
         subject,
         html,
+        text,
       });
 
       if (error) {
@@ -42,17 +46,17 @@ export class MailService {
   }
 
   async sendEmailVerification(to: string, name: string, token: string) {
-    const html = await render(React.createElement(EmailVerificationTemplate, { name, token }));
-    return this.send({ to, subject: 'Confirme seu endereço de e-mail', html });
+    const email = React.createElement(EmailVerificationTemplate, { name, token });
+    return this.send({ to, subject: 'Confirme seu endereço de e-mail', email });
   }
 
   async sendWelcome(to: string, name: string) {
-    const html = await render(React.createElement(WelcomeEmail, { name }));
-    return this.send({ to, subject: 'Bem-vindo ao TopFlop!', html });
+    const email = React.createElement(WelcomeEmail, { name });
+    return this.send({ to, subject: 'Bem-vindo ao TopFlop!', email });
   }
 
   async sendPasswordReset(to: string, name: string, token: string) {
-    const html = await render(React.createElement(PasswordResetTemplate, { name, token }));
-    return this.send({ to, subject: 'Recuperação de Senha', html });
+    const email = React.createElement(PasswordResetTemplate, { name, token });
+    return this.send({ to, subject: 'Redefinição de senha do TopFlop', email });
   }
 }

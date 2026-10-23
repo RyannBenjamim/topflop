@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import styles from './styles.module.css'
 import Center from '../../../components/Center/Center'
@@ -15,6 +15,7 @@ import { findOne, remove, update } from '../../../api/reviews.service'
 import { findOne as findUser } from '../../../api/users.service'
 import { findManyByReview, like, unlike } from '../../../api/likes/review-likes.service'
 import { useAuth } from '../../../hooks/useAuth'
+import { useLikes } from '../../../hooks/useLikes'
 import { useTmdbMovies } from '../../../hooks/useTmdbMovies'
 import type { Review, ReviewFormValues } from '../../../types/reviews'
 import type { User } from '../../../types/users'
@@ -35,13 +36,11 @@ const ExpandedReview = () => {
   const { review_id } = useParams<{ review_id: string }>()
   const reviewId = review_id ?? ''
   const navigate = useNavigate()
-  const { user, profile } = useAuth()
+  const { user } = useAuth()
 
   const [review, setReview] = useState<Review | null>(null)
   const [error, setError] = useState('')
   const [author, setAuthor] = useState<User | null>(null)
-  const [likes, setLikes] = useState<Like[] | null>(null)
-  const [isLiking, setIsLiking] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [actionError, setActionError] = useState('')
@@ -49,11 +48,7 @@ const ExpandedReview = () => {
   const movies = useTmdbMovies([review?.movieTmdbId])
   const movie = review ? movies[review.movieTmdbId] : undefined
 
-  const loadLikes = useCallback(() => {
-    findManyByReview(reviewId)
-      .then(res => setLikes(res.data))
-      .catch(() => setLikes([]))
-  }, [reviewId])
+  const { likes, isLiked, toggle: toggleLike } = useLikes(reviewId, { findMany: findManyByReview, like, unlike }, setActionError)
 
   useEffect(() => {
     let isMounted = true
@@ -74,42 +69,13 @@ const ExpandedReview = () => {
     }
 
     loadReview()
-    loadLikes()
 
     return () => {
       isMounted = false
     }
-  }, [reviewId, loadLikes])
+  }, [reviewId])
 
   const isAuthor = review?.authorId === user?.id
-  const isLiked = Boolean(likes?.some(item => item.user.id === user?.id))
-
-  const toggleLike = async () => {
-    if (!user) return
-    setIsLiking(true)
-
-    try {
-      if (isLiked) {
-        await unlike(reviewId)
-        setLikes(current => (current ?? []).filter(item => item.user.id !== user.id))
-      } else {
-        await like(reviewId)
-        setLikes(current => [
-          ...(current ?? []),
-          {
-            createdAt: new Date().toISOString(),
-            user: { id: user.id, username: profile?.username ?? '', email: profile?.email ?? '', name: profile?.name ?? null },
-          },
-        ])
-      }
-    } catch (error) {
-      setActionError(getErrorMessage(error))
-      loadLikes()
-    } finally {
-      setIsLiking(false)
-    }
-  }
-
   const handleUpdate = async (values: ReviewFormValues) => {
     const response = await update(reviewId, values)
     setReview(response.data)
@@ -203,7 +169,7 @@ const ExpandedReview = () => {
                 isLiked={isLiked}
                 count={likes?.length ?? 0}
                 onToggle={toggleLike}
-                isLoading={isLiking || likes === null}
+                isLoading={likes === null}
               />
               {likes && <p>{likedByText(likes)}</p>}
             </div>

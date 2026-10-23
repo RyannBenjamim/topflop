@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './styles.module.css'
 import Avatar from '../../../../../components/Avatar/Avatar'
@@ -8,8 +8,8 @@ import LikeButton from '../../../../../components/LikeButton/LikeButton'
 import { remove, update } from '../../../../../api/comments.service'
 import { findManyByComment, like, unlike } from '../../../../../api/likes/comment-likes.service'
 import { useAuth } from '../../../../../hooks/useAuth'
+import { useLikes } from '../../../../../hooks/useLikes'
 import type { Comment } from '../../../../../types/comments'
-import type { Like } from '../../../../../types/likes'
 import { formatRelativeTime } from '../../../../../utils/formatRelativeTime'
 import { getErrorMessage, isRequestError } from '../../../../../utils/requestError'
 import { validateComment } from '../../../../../utils/validators'
@@ -22,49 +22,16 @@ interface CommentItemProps {
 }
 
 const CommentItem = ({ comment, onUpdated, onRemoved }: CommentItemProps) => {
-  const { user, profile } = useAuth()
-  const [likes, setLikes] = useState<Like[] | null>(null)
-  const [isLiking, setIsLiking] = useState(false)
+  const { user } = useAuth()
   const [isEditing, setIsEditing] = useState(false)
   const [draft, setDraft] = useState(comment.content)
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    findManyByComment(comment.id)
-      .then(res => setLikes(res.data))
-      .catch(() => setLikes([]))
-  }, [comment.id])
+  const { likes, isLiked, toggle: toggleLike } = useLikes(comment.id, { findMany: findManyByComment, like, unlike }, setError)
 
   const isOwner = comment.user.id === user?.id
-  const isLiked = Boolean(likes?.some(item => item.user.id === user?.id))
   const displayName = comment.user.name || comment.user.username
-
-  const toggleLike = async () => {
-    if (!user) return
-    setIsLiking(true)
-    setError('')
-
-    try {
-      if (isLiked) {
-        await unlike(comment.id)
-        setLikes(current => (current ?? []).filter(item => item.user.id !== user.id))
-      } else {
-        await like(comment.id)
-        setLikes(current => [
-          ...(current ?? []),
-          {
-            createdAt: new Date().toISOString(),
-            user: { id: user.id, username: profile?.username ?? '', email: profile?.email ?? '', name: profile?.name ?? null },
-          },
-        ])
-      }
-    } catch (error) {
-      setError(getErrorMessage(error))
-    } finally {
-      setIsLiking(false)
-    }
-  }
 
   const handleSave = async () => {
     const validation = validateComment(draft)
@@ -144,7 +111,7 @@ const CommentItem = ({ comment, onUpdated, onRemoved }: CommentItemProps) => {
             isLiked={isLiked}
             count={likes?.length ?? 0}
             onToggle={toggleLike}
-            isLoading={isLiking || likes === null}
+            isLoading={likes === null}
           />
           {isOwner && !isEditing && (
             <>
